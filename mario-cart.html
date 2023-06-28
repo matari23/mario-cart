@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <style type="text/css">
+        *{ margin: 0;padding: 0;}
+
+        body{
+            background: url("images/bg.png") no-repeat center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .world{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            /* margin-left: -105px ;
+            margin-top:-105px ; */
+            border: 10px solid black;
+            background-image: url("images/world.png");
+        }
+
+        .cooper{
+            position: absolute;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+        }
+
+        .title{
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -150px ;
+            opacity: 0.1;
+        }
+
+        .title.show{
+            opacity: 1;
+            bottom: -40px;
+        }
+
+        .srcoll{
+            color: white;
+            font-size:20px;
+            margin: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+        .button{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 10px solid transparent;
+            position: fixed;
+            right: 0;   top: 0;
+            margin: 30px;
+            cursor: pointer;
+        }
+        .button.start{
+            border-color: orange;
+        }
+
+        .button.stop{
+            border-color: red;            
+        }
+    </style>
+
+    <script lang="java">
+
+        $(function(){
+
+            var check = false;
+
+            setInterval(function(){
+
+                if(check == true){
+                    $(".world").css({"background-position" : "-=10" })
+                }
+
+            }, 30)//
+
+            $(".start").click(function(){
+                if(check == true){
+                    check = false;
+                    $(".button").removeClass("start");
+                    $(".button").addClass("stop");
+                }else{
+                    check = true;
+                    $(".button").removeClass("stop");
+                    $(".button").addClass("start");
+                }
+
+            })//click
+
+            $(window).keydown(function(e){
+                if(e.keyCode == 65){
+                    $(".start").click()
+                }
+
+
+            })//
+
+        })//jquery
+
+
+        $(window).scroll(function(){
+
+            var top = $(this).scrollTop() ;
+            console.log("top : " , top);
+
+            $(".srcoll").text(top)
+
+            $(".world").css({"background-position" : -1 * top })
+
+            if(top > 500){
+                $(".title").addClass("show", 400, "easeInBack")
+            }else{
+                $(".title").removeClass("show", 400, "easeOutBack")
+            }
+
+
+        })//scroll
+
+
+    </script>
+</head>
+<body>
+
+    <div class="srcoll">0</div>
+    <div class="button start"></div>
+
+    <div class="world">
+        <img src="images/cooper.png" alt="cooper" class="cooper">
+        <img src="images/title.png" alt="title" class="title">
+    </div><!-- world -->
+
+    <div style="height: 5000px;"></div>
+
+
+    
+</body>
+</html>
